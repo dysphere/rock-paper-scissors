@@ -42,10 +42,30 @@ function playRound(playerSelection, computerSelection) {
     }
 
 function game() {
+    let wins = 0;
+    let losses = 0;
     for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt();
+        const playerSelection = prompt("Please type in rock, paper, or scissors");
         const computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
+        let round = playRound(playerSelection, computerSelection);
+        if (round.slice(0, 8) == "You Win!") {
+            ++wins;
+            console.log(round)
+        }
+        else if (round.slice(0, 9) == "You Lose!") {
+            ++losses;
+            console.log(round)
+        }
+        else {
+            console.log(round)
+        }
+    }
+    console.log(`Wins: ${wins} Losses: ${losses}`)
+    if (wins > losses) {
+        console.log("You Won!")
+    }
+    else if (losses > wins) {
+        console.log("You Lose!")
     }
 }
 
