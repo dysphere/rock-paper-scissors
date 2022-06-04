@@ -1,0 +1,9 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.final, .score, .result {
+    text-align: center;
+}

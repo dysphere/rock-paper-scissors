@@ -12,61 +12,90 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection.toLowerCase() == "rock" && computerSelection == "paper") {
+    if (playerSelection == "rock" && computerSelection == "paper") {
         return "You Lose! Paper beats Rock";
     }
-    else if (playerSelection.toLowerCase() == "rock" && computerSelection == "scissors") {
+    else if (playerSelection == "rock" && computerSelection == "scissors") {
         return "You Win! Rock beats Scissors";
     }
-    else if (playerSelection.toLowerCase() == "rock" && computerSelection == "rock") {
+    else if (playerSelection == "rock" && computerSelection == "rock") {
         return "You Tie! Rock ties with Rock";
     }
-    else if (playerSelection.toLowerCase() == "paper" && computerSelection == "scissors") {
+    else if (playerSelection == "paper" && computerSelection == "scissors") {
         return "You Lose! Scissors beats Paper";
     }
-    else if (playerSelection.toLowerCase() == "paper" && computerSelection == "rock") {
+    else if (playerSelection == "paper" && computerSelection == "rock") {
         return "You Win! Paper beats Rock";
     }
-    else if (playerSelection.toLowerCase() == "paper" && computerSelection == "paper") {
+    else if (playerSelection == "paper" && computerSelection == "paper") {
         return "You Tie! Paper ties with Paper";
     }
-    else if (playerSelection.toLowerCase() == "scissors" && computerSelection == "rock") {
+    else if (playerSelection == "scissors" && computerSelection == "rock") {
         return "You Lose! Rock beats Scissors";
     }
-    else if (playerSelection.toLowerCase() == "scissors" && computerSelection == "paper") {
+    else if (playerSelection == "scissors" && computerSelection == "paper") {
         return "You Win! Scissors beats Paper";
     }
-    else if (playerSelection.toLowerCase() == "scissors" && computerSelection == "scissors") {
+    else if (playerSelection == "scissors" && computerSelection == "scissors") {
         return "You Tie! Scissors ties with Scissors";
     }
     }
 
-function game() {
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+
+  button.addEventListener('click', () => {
     let wins = 0;
     let losses = 0;
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Please type in rock, paper, or scissors");
-        const computerSelection = computerPlay();
-        let round = playRound(playerSelection, computerSelection);
-        if (round.slice(0, 8) == "You Win!") {
-            ++wins;
-            console.log(round)
+    const score = document.querySelector(".score h2");
+    score.textContent = `Player: ${wins} Computer: ${losses}`;
+    while (wins < 5 || losses < 5) {
+        if (button.id == 'rock') {
+            let roundRock = playRound("rock", computerPlay());
+            const result = document.querySelector(".result p");
+            result.textContent = roundRock;
+            if (roundRock.slice(0,8) == "You Win!") {
+                wins++;
+            }
+            else if (roundRock.slice(0, 9) == "You Lose!") {
+                losses++;
+            }
         }
-        else if (round.slice(0, 9) == "You Lose!") {
-            ++losses;
-            console.log(round)
+        else if (button.id == 'paper') {
+            let roundPaper = playRound("paper", computerPlay());
+            const result = document.querySelector(".result p");
+            result.textContent = roundPaper;
+            if (roundPaper.slice(0, 8) == "You Win!") {
+                wins++;
+            }
+            else if (roundPaper.slice(0, 9) == "You Lose!") {
+                losses++;
+            }
         }
         else {
-            console.log(round)
-        }
+            let roundScissors = playRound("scissors", computerPlay());
+            const result = document.querySelector(".result p");
+            result.textContent = roundScissors;
+            if (roundScissors.slice(0, 8) == "You Win!") {
+                wins++;
+            }
+            else if (roundScissors.slice(0, 9) == "You Lose!") {
+                losses++;
+            }
     }
-    console.log(`Wins: ${wins} Losses: ${losses}`)
-    if (wins > losses) {
-        console.log("You Won!")
     }
-    else if (losses > wins) {
-        console.log("You Lose!")
+    if (wins > 4) {
+        const finalResult = document.querySelector(".final h1");
+        finalResult.textContent = "You Won!";
     }
-}
-
-game();
+    else if (losses > 4) {
+        const finalResult = document.querySelector(".final h1");
+        finalResult.textContent = "You Lost :(";
+    }
+    else {
+        const finalResult = document.querySelector(".final h1");
+        finalResult.textContent = "";
+    }
+  });
+});
